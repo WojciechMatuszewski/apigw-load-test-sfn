@@ -1,14 +1,13 @@
-# Welcome to your CDK TypeScript project!
+# Load testing APIGW with AWS Step Functions
 
-This is a blank project for TypeScript development with CDK.
+Inspired by [this post on AWS Compute blog](https://aws.amazon.com/blogs/compute/using-serverless-to-load-test-amazon-api-gateway-with-authorization/)
 
-The `cdk.json` file tells the CDK Toolkit how to execute your app.
+## Learnings
 
-## Useful commands
+- Writing a middleware for the `go-lambda` is not that hard
 
- * `npm run build`   compile typescript to js
- * `npm run watch`   watch for changes and compile
- * `npm run test`    perform the jest unit tests
- * `cdk deploy`      deploy this stack to your default AWS account/region
- * `cdk diff`        compare deployed stack with current state
- * `cdk synth`       emits the synthesized CloudFormation template
+- _SecretsManager_ secrets have to be _scheduled_ for deletion, you cannot delete them instantly
+
+- The validation error message for _SSM_ `putParameter` can be misleading. I've encountered messages like "parameters name cannot start with `ssm` prefix". Of course the name I was specifying DID NOT start with `ssm`.
+
+- To be able to _signUp_ user as an admin, I still had to specify `selfSignUpEnabled: true`. Giving it a bit more thought, it makes sense.
